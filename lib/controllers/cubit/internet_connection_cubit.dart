@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'internet_connection_state.dart';
 
@@ -33,7 +32,7 @@ class InternetConnectionCubit extends Cubit<InternetConnectionState> {
 // while .cancel() is a specific method used to cancel a subscription to a stream.
 // Both are used to release resources and perform cleanup,
 // but they are used in different contexts.
-  @override
+
   Future<void> closeSubscribtion() {
     log('ana b2ffffl');
     subscription?.cancel();

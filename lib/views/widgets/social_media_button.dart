@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SocialMediaButton extends StatelessWidget {
   const SocialMediaButton({
-    Key? key,
+    super.key,
     required this.iconName,
     required this.onPress,
-  }) : super(key: key);
+  });
   final String iconName;
   final VoidCallback onPress;
   @override

@@ -1,8 +1,10 @@
-import 'package:ecommerce/utilities/assets.dart';
-import 'package:ecommerce/utilities/enums.dart';
-import 'package:ecommerce/views/widgets/main_button.dart';
-import 'package:ecommerce/views/widgets/social_media_button.dart';
 import 'package:flutter/material.dart';
+
+import '../../utilities/assets.dart  (where is generated file to be)/assets.dart';
+import '../../utilities/enums.dart';
+import '../../utilities/routes.dart';
+import '../widgets/main_button.dart';
+import '../widgets/social_media_button.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -44,11 +46,10 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                   const SizedBox(height: 80.0),
                   TextFormField(
-                    controller: _emailController,
                     focusNode: _emailFocusNode,
-                    onEditingComplete: () =>
-                        FocusScope.of(context).requestFocus(_passwordFocusNode),
-                    textInputAction: TextInputAction.next,
+                    controller: _emailController,
+                    onEditingComplete: () => moveFocusToSecondField(),
+                    textInputAction: TextInputAction.done,
                     validator: (val) =>
                         val!.isEmpty ? 'Please enter your email!' : null,
                     decoration: const InputDecoration(
@@ -58,8 +59,8 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                   const SizedBox(height: 24.0),
                   TextFormField(
-                    controller: _passwordController,
                     focusNode: _passwordFocusNode,
+                    controller: _passwordController,
                     validator: (val) =>
                         val!.isEmpty ? 'Please enter your password!' : null,
                     obscureText: true,
@@ -83,9 +84,19 @@ class _AuthPageState extends State<AuthPage> {
                         ? 'Login'
                         : 'Register',
                     onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        //Todo :submit logic
-                      }
+                      //! in order to return back the states of the text fields before going to the second page
+
+                      setState(() {
+                        if (_formKey.currentState!.validate()) {
+                          debugPrint('ana 3amlet etsk wekolo tamam ');
+                          _formKey.currentState!
+                              .save(); //Todo: saving user inputs to variables will be created lately
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.bottomNavBarRoute,
+                          );
+                        }
+                      });
                     },
                   ),
                   const SizedBox(height: 16.0),
@@ -97,10 +108,20 @@ class _AuthPageState extends State<AuthPage> {
                             ? 'Don\'t have an account? Register'
                             : 'Have an account? Login',
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        _formKey.currentState!.reset();
+
+                        setState(() {
+                          if (authFormType == AuthFormType.login) {
+                            authFormType = AuthFormType.register;
+                          } else {
+                            authFormType = AuthFormType.login;
+                          }
+                        });
+                      },
                     ),
                   ),
-                  SizedBox(height: size.height * 0.09),
+                  SizedBox(height: size.height * 0.1),
                   Align(
                       alignment: Alignment.center,
                       child: Text(
@@ -109,17 +130,17 @@ class _AuthPageState extends State<AuthPage> {
                             : 'Or Register with',
                         style: Theme.of(context).textTheme.titleMedium,
                       )),
-                  const SizedBox(height: 16.0),
+                  SizedBox(height: size.height * .09),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SocialMediaButton(
-                        iconName: AppAssets.facebookIcon,
+                        iconName: Assets.imagesGoogleSvgrepoCom,
                         onPress: () {},
                       ),
                       const SizedBox(width: 16.0),
                       SocialMediaButton(
-                        iconName: AppAssets.googleIcon,
+                        iconName: Assets.imagesGoogleSvgrepoCom,
                         onPress: () {},
                       ),
                     ],
@@ -131,5 +152,16 @@ class _AuthPageState extends State<AuthPage> {
         ),
       ),
     );
+  }
+
+  void moveFocusToSecondField() {
+    FocusScope.of(context).requestFocus(_passwordFocusNode);
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }
