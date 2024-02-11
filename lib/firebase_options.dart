@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCoRMQrsFWY6GTcTNb-RQ3u01p-dU2RvlQ',
-    appId: '1:78485849218:web:918950920557a90891a09b',
-    messagingSenderId: '78485849218',
-    projectId: 'ecommerce-5e236',
-    authDomain: 'ecommerce-5e236.firebaseapp.com',
-    storageBucket: 'ecommerce-5e236.appspot.com',
-    measurementId: 'G-PCDSK0HYCE',
+    apiKey: 'AIzaSyAHiHDT4_1nyqzAHE53vOFfqwMZRObar1w',
+    appId: '1:566321836051:web:8a5cb550bcc87851b28fe6',
+    messagingSenderId: '566321836051',
+    projectId: 'ecommerce-for-ex',
+    authDomain: 'ecommerce-for-ex.firebaseapp.com',
+    storageBucket: 'ecommerce-for-ex.appspot.com',
+    measurementId: 'G-GXXDFTEWKZ',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB5Uyh1LSH7M2217bVXpNwyLR_Xp5imhxo',
-    appId: '1:78485849218:android:6e62b456428b04fe91a09b',
-    messagingSenderId: '78485849218',
-    projectId: 'ecommerce-5e236',
-    storageBucket: 'ecommerce-5e236.appspot.com',
+    apiKey: 'AIzaSyBZgMpWSo-x7R-I03nax-8VaupOiWVUGas',
+    appId: '1:566321836051:android:5cad411fcda8df0eb28fe6',
+    messagingSenderId: '566321836051',
+    projectId: 'ecommerce-for-ex',
+    storageBucket: 'ecommerce-for-ex.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCScFULXKDRerqAhp4gS4VV2wldh3qstBw',
-    appId: '1:78485849218:ios:62a2e7c0934b760191a09b',
-    messagingSenderId: '78485849218',
-    projectId: 'ecommerce-5e236',
-    storageBucket: 'ecommerce-5e236.appspot.com',
+    apiKey: 'AIzaSyB8fNn90MM1lcqFkEGkfr43QHItOqBRfxA',
+    appId: '1:566321836051:ios:49f15c07af44b19bb28fe6',
+    messagingSenderId: '566321836051',
+    projectId: 'ecommerce-for-ex',
+    storageBucket: 'ecommerce-for-ex.appspot.com',
     iosBundleId: 'com.example.ecommerce',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCScFULXKDRerqAhp4gS4VV2wldh3qstBw',
-    appId: '1:78485849218:ios:09f7b1e3c6f2203791a09b',
-    messagingSenderId: '78485849218',
-    projectId: 'ecommerce-5e236',
-    storageBucket: 'ecommerce-5e236.appspot.com',
+    apiKey: 'AIzaSyB8fNn90MM1lcqFkEGkfr43QHItOqBRfxA',
+    appId: '1:566321836051:ios:7dc0959a01c78bf8b28fe6',
+    messagingSenderId: '566321836051',
+    projectId: 'ecommerce-for-ex',
+    storageBucket: 'ecommerce-for-ex.appspot.com',
     iosBundleId: 'com.example.ecommerce.RunnerTests',
   );
 }
