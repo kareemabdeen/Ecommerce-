@@ -11,6 +11,17 @@ import 'routes.dart';
 
 Route<dynamic> onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
+    // return CupertinoPageRoute(
+    //   builder: (context) {
+    //     final auth = Provider.of<AuthBase>(context);
+    //     final authController = AuthController(authBase: auth);
+    //     return ChangeNotifierProvider(
+    //       create: (context) => authController,
+    //       child: const AuthPage(),
+    //     );
+    //   },
+    //   settings: settings,
+    // );
     case AppRoutes.authPageRoute:
       return CupertinoPageRoute(
         builder: (_) => const AuthPage(),

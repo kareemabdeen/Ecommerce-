@@ -1,5 +1,5 @@
 class AppRoutes {
-  static const String landingPageRoute = '/';
+  static const String landingPageRoute = 'landingPage'; // '/'
   static const String authPageRoute = '/login';
   static const String homePageRoute = '/home';
   static const String profilePageRoute = '/profilePage';
