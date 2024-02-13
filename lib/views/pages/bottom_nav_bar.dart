@@ -72,7 +72,7 @@ List<Widget> _buildScreens() {
     const ShopPage(),
     const CartPage(),
     const FavouritePage(),
-    const ProfilePage()
+    const ProfilePage(),
   ];
 }
 

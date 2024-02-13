@@ -33,6 +33,8 @@ class Auth implements AuthBase {
   }
   final _firebaseAuth = FirebaseAuth.instance;
 
+  // Auth get getIinstance => Auth.getInstance();
+
   @override
   Future<User?> logInWithEmailAndPassword(String email, String password) async {
     final UserCredential userCredential = await _firebaseAuth

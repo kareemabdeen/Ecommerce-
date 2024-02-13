@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 import '../utilities/assets2.dart';
 
 class Product {
@@ -19,29 +21,51 @@ class Product {
     this.rate,
   });
 
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'id': id,
-  //     'title': title,
-  //     'price': price,
-  //     'imgUrl': imgUrl,
-  //     'discountValue': discountValue,
-  //     'category': category,
-  //     'rate': rate,
-  //   };
-  // }
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'price': price,
+      'imgUrl': imgUrl,
+      'discountValue': discountValue,
+      'category': category,
+      'rate': rate,
+    };
+  }
 
-  // factory Product.fromMap(Map<String, dynamic> map, String documentId) {
-  //   return Product(
-  //     id: documentId,
-  //     title: map['title'] as String,
-  //     price: map['price'] as int,
-  //     imgUrl: map['imgUrl'] as String,
-  //     discountValue: map['discountValue'] as int,
-  //     category: map['category'] as String,
-  //     rate: map['rate'] as int,
-  //   );
-  // }
+  factory Product.fromMap(
+      {required Map<String, dynamic> map, required String documentId}) {
+    return Product(
+      id: documentId,
+      title: map['title'] as String,
+      price: map['price'] as int,
+      imgUrl: map['imgUrl'] as String,
+      discountValue: map['discountValue'] as int,
+      category: map['category'] as String,
+      rate: map['rate'] as int,
+    );
+  }
+
+  Product copyWith({
+    String? id,
+    String? title,
+    int? price,
+    String? imgUrl,
+    ValueGetter<int?>? discountValue,
+    String? category,
+    ValueGetter<int?>? rate,
+  }) {
+    return Product(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      price: price ?? this.price,
+      imgUrl: imgUrl ?? this.imgUrl,
+      discountValue:
+          discountValue != null ? discountValue() : this.discountValue,
+      category: category ?? this.category,
+      rate: rate != null ? rate() : this.rate,
+    );
+  }
 }
 
 List<Product> dummyProducts = [

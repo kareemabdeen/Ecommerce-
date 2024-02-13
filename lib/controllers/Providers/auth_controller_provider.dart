@@ -48,14 +48,20 @@ class AuthController with ChangeNotifier {
     }
   }
 
-  Future<void> logOut() => authBase.logOut();
+  Future<void> logOut() async {
+    try {
+      await authBase.logOut();
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   void toggleAuthFormType() {
     //! cannot be updated to ui
-    if (authFormType == AuthFormType.login) {
-      authFormType = AuthFormType.register;
-    } else {
+    if (authFormType == AuthFormType.register) {
       authFormType = AuthFormType.login;
+    } else {
+      authFormType = AuthFormType.register;
     }
     copyWith(
       authFormType: authFormType,
