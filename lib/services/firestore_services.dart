@@ -33,14 +33,12 @@ class FireStoreServices {
   //   await _firestore.collection(collection).doc(documentId).update(data);
   // }
 
-  Future<void> deleteData({
-    required documentPath,
-  }) async {
+  Future<void> deleteData({required documentPath}) async {
     final docsRefrence = _firestore.doc(documentPath);
     log('$documentPath');
     await docsRefrence.delete();
   }
-  //   Future<void> deleteDocument(String collection, String documentId) async {
+  //   Future<void> deleteDocument(String collection) async {
   //   await _firestore.collection(collection).doc(documentId).delete();
   // }
 
@@ -67,33 +65,33 @@ class FireStoreServices {
 
     return snapshots.map(
       (snapshot) {
+        // factory object product
         return fromMapBuilder(data: snapshot.data(), documentId: snapshot.id);
       },
     );
   }
 
+  ///getEntireContentOfCollection
   Stream<List<T>> collectionsStream<T>({
     required String path,
-    required T Function(Map<String, dynamic>? data,
-            {required String documentId})
+    required T Function(Map<String, dynamic>? data, String documentId)
         fromMapBuilder,
     Query Function(Query query)? queryBuilder,
     int Function(T lhs, T rhs)? sort,
   }) {
     Query query = _firestore.collection(path);
-
     if (queryBuilder != null) {
       query = queryBuilder(query);
     }
-    final snapshots = query.snapshots();
 
+    final snapshots = query.snapshots();
     return snapshots.map(
       (snapshot) {
         final result = snapshot.docs
             .map(
               (snapshot) => fromMapBuilder(
                 snapshot.data() as Map<String, dynamic>,
-                documentId: snapshot.id,
+                snapshot.id,
               ),
             )
             .where((value) => value != null)
@@ -105,6 +103,7 @@ class FireStoreServices {
       },
     );
   }
+
   // final numbers = <int>[1, 2, 3, 5, 6, 7];
   // var result = numbers.where((x) => x < 5); // (1, 2, 3)
 
@@ -133,4 +132,34 @@ class FireStoreServices {
   //     },
   //   );
   // }
+}
+
+// this makes an leakage in memory
+
+// Auth auth = Auth();
+
+// we want this to make use of only one object froom this class
+
+// Auth auth = Auth.getInstance();
+
+// Auth auth = Auth.instance;
+
+// // singelton design pattern
+// class Auth implements AuthBase {
+//   // Auth._();
+//   Auth._();
+
+//   static Auth instance = Auth._();
+// }
+
+// themeing  lazy singlton
+
+class Auth {
+  Auth._();
+
+  static Auth? auth;
+
+  factory Auth.instance() {
+    return auth ??= Auth._();
+  }
 }

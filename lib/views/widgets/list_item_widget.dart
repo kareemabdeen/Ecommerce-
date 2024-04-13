@@ -1,152 +1,193 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
+import '../../controllers/Providers/database_controller.dart';
 import '../../models/product_model.dart';
+import '../../utilities/routes.dart';
 
-class ProductItem extends StatelessWidget {
+class ListItemHome extends StatefulWidget {
   final Product product;
-
-  const ProductItem({
+  final bool isNew;
+  final VoidCallback? addToFavorites;
+  final bool isFavorite;
+  const ListItemHome({
     super.key,
     required this.product,
+    required this.isNew,
+    this.addToFavorites,
+    this.isFavorite = false,
   });
 
   @override
+  State<ListItemHome> createState() => _ListItemHomeState();
+}
+
+class _ListItemHomeState extends State<ListItemHome> {
+  @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: Image.network(
-                product.imgUrl,
-                width: 200,
-                height: 200,
-                fit: BoxFit.cover,
+    final size = MediaQuery.of(context).size;
+    final database = Provider.of<DataBase>(context);
+    return InkWell(
+      //*rootNavigator: true, start new subtree , so we need to continue providing database object to this new subtree
+      onTap: () => Navigator.of(context, rootNavigator: true).pushNamed(
+        AppRoutes.productDetailsRoute,
+        // TODO: we need to refactor to create models for the arguments
+
+        arguments: {
+          'product': widget.product,
+          'database': database,
+        },
+      ),
+      child: Stack(
+        children: [
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Image.network(
+                  widget.product.imgUrl,
+                  width: 200,
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: 50,
-                height: 25,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.0),
-                    color: Colors.red,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Center(
-                      child: Text(
-                        '${product.discountValue}%',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.white,
-                            ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 50,
+                  height: 25,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16.0),
+                      color: widget.isNew ? Colors.black : Colors.red,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Center(
+                        child: Text(
+                          widget.isNew
+                              ? 'NEW'
+                              : '${widget.product.discountValue}%',
+                          style:
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    color: Colors.white,
+                                  ),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        // TODO: Create one component for the favorite button
-        Positioned(
-          left: MediaQuery.of(context).size.width * 0.39,
-          bottom: MediaQuery.of(context).size.height * 0.075,
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 5,
-                  color: Colors.grey.shade200,
-                  spreadRadius: 2,
-                )
-              ],
-            ),
-            child: const CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 20.0,
-              child: InkWell(
-                child: Icon(
-                  Icons.favorite_outline,
-                  size: 20.0,
-                  color: Colors.red,
+            ],
+          ),
+          // TODO: Create one component for the favorite button
+          Positioned(
+            left: size.width * 0.38,
+            bottom: size.height * 0.12,
+            child: Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 5,
+                    color: Colors.grey,
+                    spreadRadius: 2,
+                  )
+                ],
+              ),
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 20.0,
+                child: InkWell(
+                  onTap: widget.addToFavorites,
+                  child: Icon(
+                    widget.isFavorite ? Icons.favorite : Icons.favorite_outline,
+                    size: 20.0,
+                    color: widget.isFavorite ? Colors.red : Colors.grey,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        Positioned(
-          bottom: 5,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const SizedBox(width: 4.0),
-                  Text(
-                    '(100)',
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Colors.grey,
+          Positioned(
+            bottom: 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    RatingBarIndicator(
+                      itemSize: 25.0,
+                      rating: widget.product.rate?.toDouble() ?? 4.0,
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      direction: Axis.horizontal,
+                    ),
+                    const SizedBox(width: 4.0),
+                    Text(
+                      '(100)',
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: Colors.grey,
+                          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8.0),
+                Text(
+                  widget.product.brandName,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Colors.grey,
+                      ),
+                ),
+                const SizedBox(height: 6.0),
+                Text(
+                  widget.product.title,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                const SizedBox(height: 6.0),
+                widget.isNew
+                    ? Text(
+                        '${widget.product.price}\$',
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                              color: Colors.grey,
+                            ),
+                      )
+                    : Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${widget.product.price}\$  ',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(
+                                    color: Colors.grey,
+                                    decoration: TextDecoration.lineThrough,
+                                  ),
+                            ),
+                            TextSpan(
+                              text:
+                                  '  ${widget.product.price * (widget.product.discountValue!) / 100}\$',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(
+                                    color: Colors.red,
+                                  ),
+                            ),
+                          ],
                         ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                product.category,
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Colors.grey,
-                    ),
-              ),
-              const SizedBox(height: 6.0),
-              Text(
-                product.title,
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              const SizedBox(height: 6.0),
-              // isNew
-              //     ? Text(
-              //         '${product.price}\$',
-              //         style: Theme.of(context).textTheme.titleSmall!.copyWith(
-              //               color: Colors.grey,
-              //             ),
-              //       )
-              //     : Text.rich(
-              //         TextSpan(
-              //           children: [
-              //             TextSpan(
-              //               text: '${product.price}\$  ',
-              //               style: Theme.of(context)
-              //                   .textTheme
-              //                   .titleSmall!
-              //                   .copyWith(
-              //                     color: Colors.grey,
-              //                     decoration: TextDecoration.lineThrough,
-              //                   ),
-              //             ),
-              //             TextSpan(
-              //               text:
-              //                   '  ${product.price * (product.discountValue!) / 100}\$',
-              //               style: Theme.of(context)
-              //                   .textTheme
-              //                   .titleSmall!
-              //                   .copyWith(
-              //                     color: Colors.red,
-              //                   ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-            ],
-          ),
-        ),
-      ],
+                      ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

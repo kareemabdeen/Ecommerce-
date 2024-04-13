@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../controllers/Providers/auth_controller_provider.dart';
-import '../../utilities/assets.dart  (where is generated file to be)/assets.dart';
 import '../../utilities/enums.dart';
 import '../../utilities/routes.dart';
 import '../widgets/main_button.dart';
 import '../widgets/main_daliog_widget.dart';
-import '../widgets/social_media_button.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -101,6 +99,8 @@ class _AuthPageState extends State<AuthPage> {
                           _formKey.currentState!
                               .save(); //Todo: saving user inputs to variables will be created lately
                           _submit(model: model);
+
+                          Navigator.pushNamed(context, AppRoutes.homePageRoute);
                         }
                       },
                     ),
@@ -129,18 +129,18 @@ class _AuthPageState extends State<AuthPage> {
                           style: Theme.of(context).textTheme.titleMedium,
                         )),
                     SizedBox(height: size.height * .09),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SocialMediaButton(
-                          iconName: Assets.imagesGoogleSvgrepoCom,
-                          onPress: () {},
-                        ),
-                        const SizedBox(width: 16.0),
-                        SocialMediaButton(
-                          iconName: Assets.imagesGoogleSvgrepoCom,
-                          onPress: () {},
-                        ),
+                        // SocialMediaButton(
+                        //   iconName: AppAssets.facebookIcon,
+                        //   onPress: () {},
+                        // ),
+                        // const SizedBox(width: 16.0),
+                        // SocialMediaButton(
+                        //   iconName: AppAssets.googleIcon,
+                        //   onPress: () {},
+                        // ),
                       ],
                     ),
                   ],
@@ -154,34 +154,35 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Future<void> _submit({required AuthController model}) async {
-    // try {
-    //   await model.submit();
-    //false => return
-    //   if (!mounted) return;
-    // } catch (e) {
-    //   MainDialog(
-    //     context: context,
-    //     title: 'Error Authentication',
-    //     content: e.toString(),
-    //   ).showAlertDialog();
-    // }
-    await model
-        .submit()
-        .then(
-          (_) => Navigator.pushNamed(
-            context,
-            AppRoutes.bottomNavBarRoute,
-          ),
-        )
-        .catchError(
-      (e) {
-        return MainDialog(
-          context: context,
-          title: 'Error Authentication',
-          content: e.toString(),
-        ).showAlertDialog();
-      },
-    );
+    try {
+      await model.submit();
+
+      if (!mounted) return;
+    } catch (e) {
+      MainDialog(
+        context: context,
+        title: 'Error Authentication',
+        content: e.toString(),
+      ).showAlertDialog();
+    }
+    // await model
+    //     .submit()
+    //     .then(
+    //       (_) => Navigator.pushNamed(
+    //         context,
+    //         AppRoutes.bottomNavBarRoute,
+    //       ),
+    //     )
+    //     .catchError(
+    //   (e) {
+    //     Future.delayed(Duration.zero, () {
+    //       return MainDialog(
+    //         context: context,
+    //         title: 'Error Authentication',
+    //         content: e.toString(),
+    //       ).showAlertDialog();
+    //     });
+    //   },
   }
 
   String? passwordValidation(val) =>
