@@ -36,7 +36,9 @@ class MainDialog {
                 .toList()
             : [
                 TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
+                  //! recheck this again
+                  onPressed: () =>
+                      Navigator.of(context, rootNavigator: true).pop(),
                   child: const Text('OK'),
                 ),
               ],

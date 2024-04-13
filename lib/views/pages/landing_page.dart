@@ -13,26 +13,7 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //! ليه اكسسنا الاوس عن طريق البروفايدر هنا
     final auth = Provider.of<AuthBase>(context);
-    //   return StreamBuilder(
-    //     stream: auth.authStateChanges,
-    //     builder: (context, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.active) {
-    //         final user = snapshot.data;
-    //         if (user == null) {
-    //           return const AuthPage();
-    //         }
-    //         return const HomePage();
-    //       }
-    //       // TODO: We will refactor this to make one component for loading
-    //       return const Scaffold(
-    //         //! Loading Screen
-    //         body: Center(
-    //           child: CircularProgressIndicator(), //! A progress indicator
-    //         ),
-    //       );
-    //     },
-    //   );
-    // }
+
     return StreamBuilder<User?>(
       stream: Auth.getInstance().authStateChanges,
       builder: (context, snapshot) {
