@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../controllers/Providers/auth_controller_provider.dart';
+import '../../controllers/Providers/database_controller.dart';
 import '../../utilities/enums.dart';
 import '../../utilities/routes.dart';
 import '../widgets/main_button.dart';
@@ -99,8 +100,13 @@ class _AuthPageState extends State<AuthPage> {
                           _formKey.currentState!
                               .save(); //Todo: saving user inputs to variables will be created lately
                           _submit(model: model);
-
-                          Navigator.pushNamed(context, AppRoutes.homePageRoute);
+                          final database =
+                              Provider.of<DataBase>(context, listen: false);
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.homePageRoute,
+                            arguments: database,
+                          );
                         }
                       },
                     ),

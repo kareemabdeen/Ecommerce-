@@ -6,6 +6,7 @@ import 'firebase_options.dart';
 import 'services/auth.dart';
 import 'utilities/router.dart';
 import 'utilities/routes.dart';
+import 'views/pages/check_out_page.dart';
 
 late String intialRoute;
 void detectIntialRouteForOurapp() {
@@ -44,9 +45,9 @@ class EcommerceApp extends StatelessWidget {
         title: 'Ecommerce App',
         // TODO : Refactor this theme away from the main file
         theme: getLightThemeData(context),
-
         onGenerateRoute: onGenerateRoutes,
-        initialRoute: intialRoute,
+        // initialRoute: intialRoute,
+        home: const CheckOutPage(),
       ),
     );
   }

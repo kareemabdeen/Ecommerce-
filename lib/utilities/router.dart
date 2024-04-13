@@ -89,14 +89,24 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       );
 
     case AppRoutes.checkoutPageRoute:
+      final database = settings.arguments as DataBase;
+
       return CupertinoPageRoute(
-        builder: (_) => const CheckOutPage(),
+        builder: (_) => Provider.value(
+          value: database,
+          child: const CheckOutPage(),
+        ),
         settings: settings,
       );
 
     case AppRoutes.homePageRoute:
       return CupertinoPageRoute(
-        builder: (context) => const HomePage(),
+        builder: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          final DataBase database = args['database'];
+
+          return Provider.value(value: database, child: const HomePage());
+        },
         settings: settings,
       );
 

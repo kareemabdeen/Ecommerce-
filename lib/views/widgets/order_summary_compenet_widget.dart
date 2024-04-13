@@ -21,7 +21,7 @@ class OrderSummaryComponent extends StatelessWidget {
               ),
         ),
         Text(
-          value,
+          '$value\$',
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ],

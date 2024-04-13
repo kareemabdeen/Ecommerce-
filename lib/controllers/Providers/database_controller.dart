@@ -1,3 +1,4 @@
+import '../../models/delivery_methods_model.dart';
 import '../../models/product_model.dart';
 import '../../models/user_cart_model.dart';
 import '../../models/user_data_model.dart';
@@ -10,6 +11,8 @@ abstract class DataBase {
   Future<void> addUser({required UserData user});
   Future<void> addProduct({required Product product});
   Stream<List<AddToCartModel>> userCartAllProducts();
+  Stream<List<DeliveryMethodModel>> getAvailableDeliveryMethods();
+
   Future<void> addTOCart({required AddToCartModel product});
 }
 
@@ -94,6 +97,16 @@ class FireStoreDataBase implements DataBase {
           data!,
           productID: documentId,
         );
+      },
+    );
+  }
+
+  @override
+  Stream<List<DeliveryMethodModel>> getAvailableDeliveryMethods() {
+    return fireStoreServices.collectionsStream(
+      path: '/deliveryMethods',
+      fromMapBuilder: (data, documentId) {
+        return DeliveryMethodModel.fromMap(data!, documentId);
       },
     );
   }
