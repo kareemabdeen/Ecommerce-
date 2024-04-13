@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../controllers/Providers/database_controller.dart';
 import '../../models/user_cart_model.dart';
+import '../../utilities/routes.dart';
 import '../widgets/list_cart_item_widget.dart';
 import '../widgets/main_button.dart';
 import '../widgets/order_summary_compenet_widget.dart';
@@ -100,7 +101,12 @@ class _CartPageState extends State<CartPage> {
                     const SizedBox(height: 32.0),
                     MainButton(
                       text: 'Checkout',
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context, rootNavigator: true).pushNamed(
+                          AppRoutes.checkoutPageRoute,
+                          arguments: database,
+                        );
+                      },
                       hasCircularBorder: true,
                     ),
                     const SizedBox(height: 32.0),

@@ -111,8 +111,8 @@ class CartItem extends StatelessWidget {
                         children: [
                           CustomFloatingActionButton(
                             icon: const Icon(Icons.add),
-                            heroTag:
-                                generateDecoumentId, //* in order each button in listview.builder to have distinct hero id
+                            // heroTag:
+                            //     generateDecoumentId, //* in order each button in listview.builder to have distinct hero id
                             color: Colors.white,
                             onPressed: () {},
                           ),
@@ -125,7 +125,7 @@ class CartItem extends StatelessWidget {
                                     fontWeight: FontWeight.bold, fontSize: 14),
                           ),
                           CustomFloatingActionButton(
-                            heroTag: generateDecoumentId,
+                            // heroTag: generateDecoumentId,
                             icon: const Icon(Icons.add),
                             color: Colors.white,
                             onPressed: () {},
@@ -164,11 +164,11 @@ class CustomFloatingActionButton extends StatelessWidget {
   final Function() onPressed;
   final Widget icon;
   final Color color;
-  final Object heroTag;
+  //final Object heroTag;
   const CustomFloatingActionButton({
     required this.onPressed,
     required this.icon,
-    required this.heroTag,
+    // required this.heroTag,
     this.color = Colors.blue,
     super.key,
   });
@@ -180,7 +180,7 @@ class CustomFloatingActionButton extends StatelessWidget {
       width: 40,
       child: FloatingActionButton(
         backgroundColor: color,
-        heroTag: heroTag,
+        heroTag: generateDecoumentId,
         elevation: .4,
         shape: const CircleBorder(side: BorderSide(color: Colors.white)),
         onPressed: onPressed,
