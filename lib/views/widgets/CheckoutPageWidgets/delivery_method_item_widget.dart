@@ -12,26 +12,34 @@ class DeliveryMethodItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 120,
+      width: 200,
+      height: 200,
       child: DecoratedBox(
+        //  position: ,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
           color: Colors.white,
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Image.network(
-              deliveryMethodModel.imageUrl,
-              fit: BoxFit.cover,
-              height: 30,
-            ),
-            const SizedBox(height: 6.0),
-            Text(
-              '$deliveryMethodModel.days days',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ]),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Image.network(
+                deliveryMethodModel.imageUrl,
+                fit: BoxFit.cover,
+                cacheHeight: 50,
+                cacheWidth: 100,
+              ),
+              Text(
+                deliveryMethodModel.days,
+                style: Theme.of(context).textTheme.bodyLarge!,
+              ),
+            ],
+          ),
         ),
       ),
     );

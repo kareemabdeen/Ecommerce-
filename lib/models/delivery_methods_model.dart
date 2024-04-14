@@ -1,9 +1,10 @@
 class DeliveryMethodModel {
+  final String days;
+
   final String id;
   final String imageUrl;
   final String name;
-  final num price;
-  final String days;
+  final int price;
 
   DeliveryMethodModel({
     required this.id,
@@ -17,7 +18,7 @@ class DeliveryMethodModel {
     String? id,
     String? imageUrl,
     String? name,
-    num? price,
+    int? price,
     String? days,
   }) {
     return DeliveryMethodModel(
