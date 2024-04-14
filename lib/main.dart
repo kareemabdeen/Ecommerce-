@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'controllers/Providers/database_controller.dart';
 import 'firebase_options.dart';
 import 'services/auth.dart';
 import 'utilities/router.dart';
@@ -47,7 +48,10 @@ class EcommerceApp extends StatelessWidget {
         theme: getLightThemeData(context),
         onGenerateRoute: onGenerateRoutes,
         // initialRoute: intialRoute,
-        home: const CheckOutPage(),
+        home: Provider<DataBase>(
+          create: ((context) => FireStoreDataBase(currentUserId: '2')),
+          child: const CheckOutPage(),
+        ),
       ),
     );
   }

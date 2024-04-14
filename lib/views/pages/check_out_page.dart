@@ -113,12 +113,17 @@ class CheckOutPage extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.1,
                       width: double.infinity,
                       child: ListView.builder(
-                        padding: const EdgeInsets.all(8),
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
+                        itemCount: deliveryMethods.length,
                         physics: const ClampingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return DeliveryMethodItem(
-                            deliveryMethodModel: deliveryMethods[index],
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 5),
+                            child: DeliveryMethodItem(
+                              deliveryMethodModel: deliveryMethods[index],
+                            ),
                           );
                         },
                       ),
